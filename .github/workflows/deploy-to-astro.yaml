@@ -12,8 +12,7 @@ on:
   #       required: true
   #       type: string
   push:
-    branches:
-      - main
+    branches: [main, dev]
 
 # env:
 #   ASTRO_API_TOKEN: ASTRO_API_TOKEN
@@ -37,3 +36,17 @@ jobs:
       uses: astronomer/deploy-action@v0.2
       with:
         deployment-id: ${{ vars.DEPLOYMENT_ID }}
+  dev-push:
+    environment: astro-pov
+    if: github.ref == 'refs/heads/dev'
+    env:
+      ## Sets DEV Deployment API credential as an environment variable
+      ASTRO_API_TOKEN: ${{ secrets.ASTRO_API_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to Astro
+      uses: astronomer/deploy-action@v0.2
+      with:
+        deployment-id: ${{ vars.DEPLOYMENT_ID }}
+
+
