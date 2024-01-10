@@ -15,9 +15,9 @@ on:
     branches:
       - main
 
-# env:
-#   ASTRO_API_TOKEN: ${{ secrets.ASTRO_API_TOKEN }}
-#   DEPLOYMENT_ID: ${{ vars.DEPLOYMENT_ID }}
+env:
+  ASTRO_API_TOKEN: ASTRO_API_TOKEN
+  DEPLOYMENT_ID: DEPLOYMENT_ID
 
 jobs:
   # build:
