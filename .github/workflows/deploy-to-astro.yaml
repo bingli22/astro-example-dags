@@ -15,9 +15,11 @@ on:
     branches:
       - main
 
-env:
-  ASTRO_API_TOKEN: ASTRO_API_TOKEN
-  DEPLOYMENT_ID: DEPLOYMENT_ID
+# env:
+#   ASTRO_API_TOKEN: ASTRO_API_TOKEN
+#   DEPLOYMENT_ID: DEPLOYMENT_ID
+
+environment: astro-pov
 
 jobs:
   # build:
