@@ -34,7 +34,7 @@ jobs:
         # echo $BRANCH_DEPLOYMENT_NAME$
 
         # Create template of deployment to be copied with
-        astro deployment inspect $DEPLOYMENT_ID --template > deployment-preview-template.yaml 
+        astro deployment inspect ${{ vars.DEPLOYMENT_ID }} --template > deployment-preview-template.yaml 
 
         # Add name to deployment template file
         sed -i "s|  name:.*|  name: "new-deployment"}|g"  deployment-preview-template.yaml
