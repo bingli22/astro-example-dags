@@ -3,11 +3,6 @@ name: Astronomer CI - Create Deployment
 on:
   push:
     branches: [create-new]
-      # - "**"
-
-# env:
-#   ## Set your API token as a GitHub secret
-#   ENV_VAR: ${{ secrets.ASTRO_API_TOKEN }}
 
 jobs:
   create-new-deployment:
@@ -23,25 +18,16 @@ jobs:
         curl -sSL https://install.astronomer.io | sudo bash -s
     - name: Create new deployment
       run: |
-        # if [[ "${{ vars.DEPLOYMENT_ID }}" != "" ]]; then
-        #   DEPLOYMENT_ID="${{ vars.DEPLOYMENT_ID }}"
-        # fi
-        # DEPLOYMENT_NAME="$(astro deployment inspect $DEPLOYMENT_ID --key configuration.name)"
-        # echo $DEPLOYMENT_NAME
-        # BRANCH_DEPLOYMENT_NAME=$BRANCH_NAME_$DEPLOYMENT_NAME
-        # echo $BRANCH_DEPLOYMENT_NAME
-        # BRANCH_DEPLOYMENT_NAME="$BRANCH_DEPLOYMENT_NAME// /_"
-        # echo $BRANCH_DEPLOYMENT_NAME$
+        export DEPLOYMENT_NAME = "new_deployment"
 
         # Create template of deployment to be copied with
         astro deployment inspect ${{ vars.DEPLOYMENT_ID }} --template > deployment-preview-template.yaml 
 
         # Add name to deployment template file
-        sed -i "s|  name:.*|  name: "new-deployment"}|g"  deployment-preview-template.yaml
+        sed -i "s|  name:.*|  name: $DEPLOYMENT_NAME|g"  deployment-preview-template.yaml
 
-        # Create new preview Deployment based on the Deployment template file
+        # Create new preview deployment based on the deployment template file
         astro deployment create --deployment-file deployment-preview-template.yaml
 
-        # Deploy new code to the deployment preview 
-        # astro deploy -n $BRANCH_DEPLOYMENT_NAME
-
+        # Export new deployment ID
+        echo "NEW_DEPLOYMENT_ID=$(astro deployment inspect --clean-output -n $BRANCH_DEPLOYMENT_NAME --key metadata.deployment_id)" >> $GITHUB_OUTPUT
