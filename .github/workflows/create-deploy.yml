@@ -27,11 +27,11 @@ jobs:
           DEPLOYMENT_ID="${{ vars.DEPLOYMENT_ID }}"
         fi
         DEPLOYMENT_NAME="$(astro deployment inspect $DEPLOYMENT_ID --key configuration.name)"
-        echo "DEPLOYMENT_NAME"
+        echo $DEPLOYMENT_NAME
         BRANCH_DEPLOYMENT_NAME=$BRANCH_NAME_$DEPLOYMENT_NAME
-        echo "BRANCH_DEPLOYMENT_NAME"
+        echo $BRANCH_DEPLOYMENT_NAME
         BRANCH_DEPLOYMENT_NAME="$BRANCH_DEPLOYMENT_NAME// /_"
-        echo "BRANCH_DEPLOYMENT_NAME"
+        echo $BRANCH_DEPLOYMENT_NAME$
         # Create template of deployment to be copied with
         astro deployment inspect $DEPLOYMENT_ID --template > deployment-preview-template.yaml 
         # Add name to deployment template file
