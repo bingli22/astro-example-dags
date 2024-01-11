@@ -18,7 +18,7 @@ jobs:
         curl -sSL https://install.astronomer.io | sudo bash -s
     - name: Create new deployment
       run: |
-        export DEPLOYMENT_NAME=new_deployment
+        export DEPLOYMENT_NAME=new_deployment_1
 
         # Create template of deployment to be copied with
         astro deployment inspect ${{ vars.DEPLOYMENT_ID }} --template > deployment-preview-template.yaml 
@@ -30,4 +30,4 @@ jobs:
         astro deployment create --deployment-file deployment-preview-template.yaml
 
         # Export new deployment ID
-        echo "NEW_DEPLOYMENT_ID=$(astro deployment inspect --clean-output -n $BRANCH_DEPLOYMENT_NAME --key metadata.deployment_id)" >> $GITHUB_OUTPUT
+        echo "NEW_DEPLOYMENT_ID=$(astro deployment inspect --clean-output -n $DEPLOYMENT_NAME --key metadata.deployment_id)" >> $GITHUB_OUTPUT
