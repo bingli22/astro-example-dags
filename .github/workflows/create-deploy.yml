@@ -23,8 +23,10 @@ jobs:
         curl -sSL https://install.astronomer.io | sudo bash -s
     - name: deploy new deployment
       run: |
-        DEPLOYMENT_ID = ${{ vars.DEPLOYMENT_ID }}
-        DEPLOYMENT_NAME = "$(astro deployment inspect $DEPLOYMENT_ID --key configuration.name)"
+        if [[ "${{ vars.DEPLOYMENT_ID }}" != "" ]]; then
+          DEPLOYMENT_ID="${{ vars.DEPLOYMENT_ID }}"
+        fi
+        DEPLOYMENT_NAME="$(astro deployment inspect $DEPLOYMENT_ID --key configuration.name)"
         BRANCH_DEPLOYMENT_NAME=$BRANCH_NAME_$DEPLOYMENT_NAME
         BRANCH_DEPLOYMENT_NAME="$BRANCH_DEPLOYMENT_NAME// /_"
 
