@@ -2,7 +2,7 @@ name: Astronomer CI - Create Deployment
 
 on:
   push:
-    branches: [test]
+    branches: [create-new]
       # - "**"
 
 # env:
