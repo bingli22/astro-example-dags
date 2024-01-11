@@ -21,13 +21,13 @@ jobs:
       uses: astronomer/deploy-action@v0.2
       with:
         action: create-deployment-preview
-        deployment-id: test-github-actions-2
+        deployment-id: ${{ vars.DEPLOYMENT_ID }}
     - name: Deploy code to preview
       uses: astronomer/deploy-action@v0.2
       with:
         action: deploy-deployment-preview
-        deployment-id: test-github-actions-2
+        deployment-id: ${{ vars.DEPLOYMENT_ID }}
     - name: Deploy code to main Deployment
       uses: astronomer/deploy-action@v0.2
       with:
-        deployment-id: test-github-actions-2
+        deployment-id: ${{ vars.DEPLOYMENT_ID }}
