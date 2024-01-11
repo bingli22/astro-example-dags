@@ -5,15 +5,16 @@ on:
     branches: [test]
       # - "**"
 
-environment: astro-pov
 env:
   ## Set your API token as a GitHub secret
-  ASTRO_API_TOKEN: ${{ secrets.ASTRO_API_TOKEN }}
+  ENV_VAR: ${{ secrets.ASTRO_API_TOKEN }}
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Print name
+      run: echo "Hello $ENV_VAR"
     - name: Create preview Deployment
       uses: astronomer/deploy-action@v0.2
       with:
