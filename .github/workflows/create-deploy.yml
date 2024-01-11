@@ -5,6 +5,7 @@ on:
     branches: [test]
       # - "**"
 
+environment: astro-pov
 env:
   ## Set your API token as a GitHub secret
   ASTRO_API_TOKEN: ${{ secrets.ASTRO_API_TOKEN }}
