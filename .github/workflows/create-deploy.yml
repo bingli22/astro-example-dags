@@ -21,7 +21,7 @@ jobs:
     - name: Install Astro
       run: |
         curl -sSL https://install.astronomer.io | sudo bash -s
-    - name: deploy new deployment
+    - name: Create new deployment
       run: |
         # if [[ "${{ vars.DEPLOYMENT_ID }}" != "" ]]; then
         #   DEPLOYMENT_ID="${{ vars.DEPLOYMENT_ID }}"
@@ -40,7 +40,7 @@ jobs:
         sed -i "s|  name:.*|  name: "new-deployment"}|g"  deployment-preview-template.yaml
 
         # Create new preview Deployment based on the Deployment template file
-        # astro deployment create --deployment-file deployment-preview-template.yaml
+        astro deployment create --deployment-file deployment-preview-template.yaml
 
         # Deploy new code to the deployment preview 
         # astro deploy -n $BRANCH_DEPLOYMENT_NAME
