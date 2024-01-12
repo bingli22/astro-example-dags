@@ -2,7 +2,7 @@ name: Astronomer CI - Deploy code
 
 on:
   push:
-    branches: test-dag
+    branches: dev
   pull_request:
     types:
       - closed
@@ -11,7 +11,7 @@ on:
 jobs:
   dev-push:
     environment: astro-pov
-    if: github.ref == 'refs/heads/test-dag'
+    if: github.ref == 'refs/heads/dev'
     env:
       ## Sets DEV Deployment API credential as an environment variable
       ASTRO_API_TOKEN: ${{ secrets.ASTRO_API_TOKEN }}
