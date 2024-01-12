@@ -1,41 +1,14 @@
 name: Astronomer CI - Deploy code
 
 on:
-  # workflow_dispatch:
-  #   inputs:
-  #     deploymentId:
-  #       description: "Deployment ID"
-  #       required: true
-  #       type: string
-  #     apiToken:
-  #       description: "Astro API Token"
-  #       required: true
-  #       type: string
   push:
-    branches: [main, dev]
-
-# env:
-#   ASTRO_API_TOKEN: ASTRO_API_TOKEN
-#   DEPLOYMENT_ID: DEPLOYMENT_ID
+    branches: dev
+  pull_request:
+    types:
+      - closed
+    branches: [staging, prod] 
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Deploy to Astro
-  #     uses: astronomer/deploy-action@v0.2
-  main-push:
-    environment: astro-pov
-    if: github.ref == 'refs/heads/main'
-    env:
-      ## Sets DEV Deployment API credential as an environment variable
-      ASTRO_API_TOKEN: ${{ secrets.ASTRO_API_TOKEN }}
-    runs-on: ubuntu-latest
-    steps:
-    - name: Deploy to Astro
-      uses: astronomer/deploy-action@v0.2
-      with:
-        deployment-id: ${{ vars.DEPLOYMENT_ID }}
   dev-push:
     environment: astro-pov
     if: github.ref == 'refs/heads/dev'
@@ -48,5 +21,30 @@ jobs:
       uses: astronomer/deploy-action@v0.2
       with:
         deployment-id: ${{ vars.DEPLOYMENT_ID }}
+  staging-merge:
+    environment: astro-pov
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+    env:
+      ## Sets DEV Deployment API credential as an environment variable
+      ASTRO_API_TOKEN: ${{ secrets.ASTRO_API_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to Astro
+      uses: astronomer/deploy-action@v0.2
+      with:
+        deployment-id: ${{ vars.STAGING_DEPLOYMENT_ID }}
+  prod-merge:
+    environment: astro-pov
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+    env:
+      ## Sets DEV Deployment API credential as an environment variable
+      ASTRO_API_TOKEN: ${{ secrets.ASTRO_API_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to Astro
+      uses: astronomer/deploy-action@v0.2
+      with:
+        deployment-id: ${{ vars.PROD_DEPLOYMENT_ID }}
+
 
 
