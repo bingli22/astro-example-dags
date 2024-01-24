@@ -17,21 +17,22 @@ jobs:
       ASTRO_API_TOKEN: ${{ secrets.ASTRO_API_TOKEN }}
     runs-on: ubuntu-latest
 
-    # steps:
-    # - name: Checkout code
-    #   uses: actions/checkout@v3
-    # - name: Install Astro
-    #   run: |
-    #     curl -sSL https://install.astronomer.io | sudo bash -s
-    # - name: DAG Deploy to Astro
-    #   run:
-    #     astro deploy ${{ vars.DEPLOYMENT_ID }} --dags
-    
     steps:
-    - name: Deploy to Astro
-      uses: astronomer/deploy-action@v0.2
-      with:
-        deployment-id: ${{ vars.DEPLOYMENT_ID }}
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install Astro
+      run: |
+        curl -sSL https://install.astronomer.io | sudo bash -s
+    - name: DAG Deploy to Astro
+      run:
+        astro deploy ${{ vars.DEPLOYMENT_ID }} --dags
+
+    # steps:
+    # - name: Deploy to Astro
+    #   uses: astronomer/deploy-action@v0.2
+    #   with:
+    #     deployment-id: ${{ vars.DEPLOYMENT_ID }}
+    
   staging-merge:
     environment: astro-pov
     if: github.event.action == 'closed' && github.event.pull_request.merged == true
